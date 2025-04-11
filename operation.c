@@ -35,12 +35,17 @@ Status printNumber(OPERAND *op)
     }
     else
     {
-        printf("\n");
+       
+        NODE *temp = op->head;
+        if(temp==op->tail && temp->digit==0)
+        {
+            printf("0");
+            return success;
+        } 
         if(op->sign==-1)
         {
             printf("-");
         }
-        NODE *temp = op->head;
         while(temp!=NULL)
         {
             printf("%d",temp->digit);
@@ -127,8 +132,8 @@ Status insertElements(OPERAND *OP,char *arg_op)
             return failure;
         }
         i++;
+        OP->length++;
     }
-    OP->length=i;
     return success;
 
 }
@@ -149,7 +154,6 @@ Status checkArgs(int count, char **args)
 {
     if(count!=4)
     {
-        printf("==%d==",count);
         printf("[INFO]: Wrong Expression count\n");
         return failure;
     }
@@ -197,7 +201,7 @@ Status checkOperand(char *op1,char *op2)
 }
 Status checkOperator(char *op)
 {
-    if( ( op[0]=='+' || op[0] == '-' || op[0]=='x' || op[0]=='y' || op[0]=='^' || op[0]=='%' ) && op[1]=='\0')
+    if( ( op[0]=='+' || op[0] == '-' || op[0]=='*' || op[0]=='/'  ) && op[1]=='\0')
     {
         return success;
     }
@@ -218,14 +222,16 @@ Status remFrontZero(OPERAND *OP)
     {
         
         NODE *temp = OP->head;
-        while(temp!=NULL && temp->digit==0)
+        while(temp->right!=NULL && temp->digit==0)
         {
+            
             temp=temp->right;
         }
         if(temp!=NULL)
         {
             OP->head=temp;
         }
+
     }
     return success;
 }
@@ -236,18 +242,26 @@ void assignNULL(OPERAND *OP1,OPERAND *OP2,OPERAND *OP3)
     {
         OP1->head=NULL;
         OP1->tail=NULL;
-
+        OP1->sign=1;
+        OP1->length=0;
+        
     }
     if(OP2!=NULL)
     {
         OP2->head=NULL;
         OP2->tail=NULL;
-
+        
+        OP2->sign=1;
+        OP2->length=0;
+        
     }
     if(OP3!=NULL)
     {
         OP3->head=NULL;
         OP3->tail=NULL;
-
+        OP3->sign=1;
+        OP3->length=0;
     }
+ 
+    
 }

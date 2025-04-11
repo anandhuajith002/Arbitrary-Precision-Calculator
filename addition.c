@@ -10,8 +10,13 @@ Status addition(OPERAND *OP1,OPERAND *OP2,OPERAND *RES)
     int carry=0,num1,num2,res;
     NODE *p1=OP1->tail,*p2=OP2->tail;
     clearOperand(RES);
-    if(OP1->sign==-1 && OP2->sign==1 || OP1->sign==-1 && OP2->sign==1)
+
+
+    if(OP1->sign==-1 && OP2->sign==1 || OP1->sign==1 && OP2->sign==-1)
     {
+    
+        OP1->sign=0;
+        OP2->sign=0;
         subtraction(OP1,OP2,RES);
         return success;
     }
@@ -19,7 +24,6 @@ Status addition(OPERAND *OP1,OPERAND *OP2,OPERAND *RES)
     {
         RES->sign=-1;
     }
-
     while(p1!=NULL || p2!=NULL)
     {
         

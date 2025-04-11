@@ -7,14 +7,22 @@
 
 Status multiplication(OPERAND *OP1,OPERAND *OP2,OPERAND *RES)
 {
+
+    
     OPERAND ans,temp;
-    int count=0,i;
+    int count=0,i,sign;
     assignNULL(&ans,&temp,NULL);
     NODE *p1=OP1->tail,*p2=OP2->tail;
     if(p1==NULL)
     {
         printf("[INFO]: Multiplication not possible\n");
         return failure;
+    }
+
+    if(OP1->sign==-1 && OP2->sign==1 || OP1->sign==1 && OP2->sign==-1)
+    {
+        sign=-1;
+        
     }
 
     while(p2!=NULL)
@@ -36,6 +44,11 @@ Status multiplication(OPERAND *OP1,OPERAND *OP2,OPERAND *RES)
 
         count++;
         p2=p2->left;
+    }
+    remFrontZero(RES);
+    if(sign ==-1)
+    {
+        RES->sign=-1;
     }
 
 }

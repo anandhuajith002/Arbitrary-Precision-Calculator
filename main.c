@@ -11,6 +11,8 @@ int main(int argc,char **argv)
 {
     OPERAND OP1,OP2,RES;
     assignNULL(&OP1,&OP2,&RES);
+    
+    char operator = argv[2][0];
 
     if(checkArgs(argc,argv)==failure)
     {
@@ -18,7 +20,6 @@ int main(int argc,char **argv)
         return 1;
     }
 
-    char operator = argv[2][0];
 
     if(insertElements(&OP1,argv[1])==failure)
     {
@@ -29,22 +30,28 @@ int main(int argc,char **argv)
     {
         printf("[INFO]: Adding 2nd operand elements failed\n");
     }
-
+    
     switch(operator)
     {
         case '+':
+           
             addition(&OP1,&OP2,&RES);
             break;
         case '-':
             subtraction(&OP1,&OP2,&RES);
             break;
             
-        case 'x':
+        // case 'x':
+        case '*':
             multiplication(&OP1,&OP2,&RES);
             break;
 
+        // case 'y':
         case '/':
-            division(&OP1,&OP2,&RES);
+            if(division(&OP1,&OP2,&RES)==failure)
+            {
+                return 1;
+            }
             break;            
 
 
@@ -55,8 +62,9 @@ int main(int argc,char **argv)
 
 
     
-    displayList(OP1);
-    displayList(OP2);
+    // displayList(OP1);
+    // displayList(OP2);
+    printf("RESULT: ");
     printNumber(&RES);
     
 }
